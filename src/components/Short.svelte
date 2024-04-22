@@ -6,6 +6,18 @@
     let urlResults = "";
     let show = false;
 
+    //Importamos el componente de Svelte para copiar la URL acortada.
+    import ClipBoard from "./ClipBoard.svelte";
+
+    //Funcion para copiar la URL acortada.
+    const copy = () => {
+        const app = new ClipBoard({
+            target: document.getElementById('clipboard'),
+            props: { urlResults },
+        });
+        app.destroy();
+    }
+    
     const fetchUrl = async () => {
 
         const options = {
@@ -22,9 +34,10 @@
         const data = await response.json();
         console.log(data);
         urlResults = data.shortURL;
+
+        show = true;
     
     }
-
 
 
     const styleInput =
@@ -55,4 +68,10 @@
     <button type="button" class={buttonStyle} on:click={fetchUrl}> Shorten</button>
 </div>
 
-<h1>{urlResults}</h1>
+{#if show}
+<div class="md:flex md:items-center mt-10 justify-center">
+    <input bind:value={urlResults} class="text-5xl text-pink-500">
+    <button class="{buttonStyle}" on:click={copy}>Copy</button>
+    <div id="clipboard"></div>
+</div>
+{/if}
