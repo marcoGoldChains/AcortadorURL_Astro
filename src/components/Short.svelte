@@ -1,5 +1,31 @@
 <script>
+    //Dominio gratuito: em7j.short.gy
+    //Clave de API: sk_FBcY0XnTTXuZ6jpQ 
+    
     let url = "";
+    let urlResults = "";
+    let show = false;
+
+    const fetchUrl = async () => {
+
+        const options = {
+            method: 'POST',
+            headers: {
+                accept: 'application/json',
+                'content-type':'application/json',
+                Authorization: 'sk_FBcY0XnTTXuZ6jpQ'
+            },
+            body: JSON.stringify({originalURL: url, domain: 'em7j.short.gy'})
+        };
+        
+        const response = await fetch('https://api.short.io/links', options);
+        const data = await response.json();
+        console.log(data);
+        urlResults = data.shortURL;
+    
+    }
+
+
 
     const styleInput =
         "bg-gray-200 appeareance-none border-2 border-gray-200 rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500";
@@ -26,5 +52,7 @@
 </div>
 
 <div class="md:flex md:items-center mt-5 justify-center">
-    <button type="button" class={buttonStyle}> Shorten</button>
+    <button type="button" class={buttonStyle} on:click={fetchUrl}> Shorten</button>
 </div>
+
+<h1>{urlResults}</h1>
