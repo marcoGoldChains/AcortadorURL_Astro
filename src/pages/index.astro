@@ -1,10 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Short from '@components/Short.svelte'
+import Short from '@components/Short.svelte';
+import Nav from '@components/Nav.astro';
 
 ---
 
 <Layout title="Acortador de URL con TailwindCSS y Svelte / En Astro">
+    <Nav />
 	<Short client:load/>
 </Layout>
 
